@@ -43,7 +43,7 @@ const DashboardContent: React.FC = () => {
         {cardData.map((card, index) => (
           <div
             key={index}
-            className="bg-white hover:shadow-2xl hover:bg-gray-200 cursor-pointer transition-all md:w-[346px] h-[120px] w-full flex flex-col md:flex-row items-center justify-start p-4 px-6 shadow-lg rounded-lg">
+            className="bg-white hover:shadow-2xl hover:bg-gray-200 cursor-pointer transition-all h-[120px] w-full flex flex-col md:flex-row items-center justify-start p-4 px-6 shadow-lg rounded-lg">
             <Image
               src={card.image}
               alt={card.title}

@@ -15,14 +15,14 @@ const Layout: React.FC = () => {
     setSelectedMenu(menu);
   };
   return (
-    <div className="flex bg-white overflow-hidden">
-      <div className="w-[320px]">
-      <Sidebar handleMenuClick={handleMenuClick}/>
+    <div className="flex bg-white">
+      <div className="rounded-r-3xl w-[320px] overflow-y-hidden h-screen static">
+        <Sidebar handleMenuClick={handleMenuClick}/>
       </div>
-      <div className="relative flex justify-between flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <div className="flex flex-col flex-1 min-h-screen overflow-x-hidden">
         <Header activeMenu={activeMenu} />
-        <div className="mx-auto bg-[#F9F9F9] h-screen w-[100%] p-4 md:p-6 2xl:p-10">
-        <Main selectedMenu={selectedMenu}/>
+        <div className="flex-1 mx-auto bg-[#eeeeee] h-full w-[100%] p-4 md:p-6 2xl:p-10 overflow-y-auto">
+          <Main selectedMenu={selectedMenu}/>
         </div>
       </div>
     </div>

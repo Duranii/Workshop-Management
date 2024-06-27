@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignIn
 import { auth } from "@/app/firebase/config";
 import Image from "next/image";
 import BgImage from "/public/timelab-pro-sWOvgOOFk1g-unsplash 2.png";
-import MileprixImage from "/public/MileprixImage.png";
+import SiderbarImage from "/public/work.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -123,13 +123,11 @@ function Index() {
         className="z-[10] w-screen object-fit absolute left-0 right-0 top-0 bottom-0 h-screen"
       />
 
-      <form className="md:w-[620px] rounded-[18px] md:h-[690px] max-md:p-3 max-md:mx-2 md:p-10 absolute mx-auto z-[100] bg-white">
-        <div className="flex flex-col justify-between md:w-[520px] md:h-[585px] mx-auto">
-          <Image
-            src={MileprixImage}
-            alt="BgImage"
-            className="w-[218px] h-[50px]"
-          />
+      <form className="w-full sm:w-[580px] md:w-[620px] rounded-[18px] max-md:p-3 max-md:mx-2 md:p-10 absolute mx-auto z-[100] bg-white">
+        <div className="flex flex-col gap-4 2xl:justify-between md:w-[520px] mx-auto">
+        <div className="w-[45%] bg-orange-500 rounded-lg">
+          <Image src={SiderbarImage} alt="BgImage" className="" width={240} height={240} />
+        </div>
           {showHelloWorld ? (
             <h1 className="text-center text-2xl font-bold">Hello World</h1>
           ) : (

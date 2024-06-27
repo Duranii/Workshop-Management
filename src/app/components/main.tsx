@@ -1,8 +1,8 @@
 import React from "react";
 import Dashboard from "./dashboard";
-import Orders from "./orders";
-import Company from "./company";
-import Drivers from "./drivers";
+import Orders from "./Customer";
+import Company from "./Vehicle";
+import Drivers from "./Order";
 import Devices from "./devices";
 import Account from "./account";
 import Settings from "./settings";
@@ -16,20 +16,20 @@ const Main: React.FC<MainProps> = ({ selectedMenu }) => {
     switch (selectedMenu) {
       case "dashboard":
         return <Dashboard />;
-      case "orders":
+      case "customer":
         return <Orders />;
-      case "company":
+      case "vehicles":
         return <Company />;
-      case "drivers":
+      case "orders":
         return <Drivers />;
-      case "devices":
+      case "customers Data":
         return <Devices />;
-      case "account":
+      case "customer With Workorder":
         return <Account />;
       case "settings":
         return <Settings />;
       default:
-        return <Dashboard />; // Default component if none matches
+        return <Dashboard />; 
     }
   };
 

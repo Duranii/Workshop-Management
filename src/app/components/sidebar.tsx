@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import SiderbarImage from "/public/MileprixImage.png";
+import SiderbarImage from "/public/work.png";
 import DashboardIcon from "/public/dashboard.svg";
 import DashboardIconActive from "/public/dashboard-active.svg";
 import OrdersIcon from "/public/orders.svg";
 import OrdersIconActive from "/public/orders-active.svg";
-import CompanyIcon from "/public/company.svg";
-import CompanyIconActive from "/public/company-active.svg";
 import DriversIcon from "/public/drivers.svg";
 import DriversIconActive from "/public/drivers-active.svg";
 import DevicesIcon from "/public/devices.svg";
@@ -15,6 +13,8 @@ import AccountIcon from "/public/account.svg";
 import AccountIconActive from "/public/account-active.svg";
 import SettingsIcon from "/public/settings.svg";
 import SettingsIconActive from "/public/settings-active.svg";
+import TruckIcon from "/public/truck.svg";
+import TruckIconActive from "/public/truck-active.svg";
 
 interface SidebarProps {
   handleMenuClick: (menu: string) => void;
@@ -27,28 +27,28 @@ const Sidebar: React.FC<SidebarProps> = ({ handleMenuClick }) => {
   const handleButtonClick = (menu: string) => {
     setActiveMenu(menu);
     handleMenuClick(menu);
-    setIsSidebarVisible(false);  // Automatically close sidebar when a menu is clicked
+    setIsSidebarVisible(false);
   };
 
   const buttonClasses = (menu: string) =>
     activeMenu === menu
-      ? "bg-[#191C52] rounded-[8px] text-white"
+      ? "bg-[#c1c1c1] rounded-[8px] text-white"
       : "bg-transparent text-black";
 
   const getIcon = (menu: string) => {
     switch (menu) {
       case "dashboard":
         return activeMenu === "dashboard" ? DashboardIconActive : DashboardIcon;
+      case "customer":
+        return activeMenu === "customer" ? DriversIconActive : DriversIcon;
+      case "vehicles":
+        return activeMenu === "vehicles" ? TruckIconActive : TruckIcon;
       case "orders":
         return activeMenu === "orders" ? OrdersIconActive : OrdersIcon;
-      case "company":
-        return activeMenu === "company" ? CompanyIconActive : CompanyIcon;
-      case "drivers":
-        return activeMenu === "drivers" ? DriversIconActive : DriversIcon;
-      case "devices":
-        return activeMenu === "devices" ? DevicesIconActive : DevicesIcon;
-      case "account":
-        return activeMenu === "account" ? AccountIconActive : AccountIcon;
+      case "customers Data":
+        return activeMenu === "customers Data" ? DevicesIconActive : DevicesIcon;
+      case "customers With Workorder":
+        return activeMenu === "customers With Workorder" ? AccountIconActive : AccountIcon;
       case "settings":
         return activeMenu === "settings" ? SettingsIconActive : SettingsIcon;
       default:
@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleMenuClick }) => {
         id="logo-sidebar"
         className={`${
           isSidebarVisible ? "block" : "hidden"
-        } lg:block z-40 bg-white h-full flex gap-8 font-inter font-[500] text-[16px] leading-[30px] flex-col items-start pt-[25px] px-[30px]`}
+        }  overflow-y-hidden rounded-r-3xl lg:block z-40 bg-white h-screen flex gap-8 font-inter font-[500] text-[16px] leading-[30px] flex-col items-start pt-[25px] px-[20px]`}
         aria-label="Sidebar"
       >
         {/* Close button for smaller screens */}
@@ -84,57 +84,108 @@ const Sidebar: React.FC<SidebarProps> = ({ handleMenuClick }) => {
             ✕
           </button>
         )}
-        
-        <Image src={SiderbarImage} alt="BgImage" className="lg:mb-4" />
+
+        <div className="bg-orange-500 rounded-lg">
+          <Image src={SiderbarImage} alt="BgImage" className="lg:mb-8" />
+        </div>
         <button
-          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses("dashboard")}`}
+          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
+            "dashboard"
+          )}`}
           onClick={() => handleButtonClick("dashboard")}
         >
-          <Image src={getIcon("dashboard")} alt="Dashboard" width={20} height={20} />
+          <Image
+            src={getIcon("dashboard")}
+            alt="Dashboard"
+            width={20}
+            height={20}
+          />
           <p>Dashboard</p>
         </button>
         <button
-          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses("orders")}`}
+          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
+            "customer"
+          )}`}
+          onClick={() => handleButtonClick("customer")}
+        >
+          <Image
+            src={getIcon("customer")}
+            alt="customer"
+            width={25}
+            height={25}
+          />
+          <p className="ml-[-3px]">Customer Entry</p>
+        </button>
+        <button
+          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
+            "vehicles"
+          )}`}
+          onClick={() => handleButtonClick("vehicles")}
+        >
+          <Image
+            src={getIcon("vehicles")}
+            alt="vehicles"
+            width={25}
+            height={25}
+          />
+          <p className="ml-[-4px]">Vehicle Entry</p>
+        </button>
+        <button
+          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
+            "orders"
+          )}`}
           onClick={() => handleButtonClick("orders")}
         >
-          <Image src={getIcon("orders")} alt="Orders" width={20} height={20} />
-          <p>Orders</p>
+          <Image
+            src={getIcon("orders")}
+            alt="orders"
+            width={20}
+            height={20}
+          />
+          <p>Order Entry</p>
         </button>
         <button
-          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses("company")}`}
-          onClick={() => handleButtonClick("company")}
+          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
+            "customers Data"
+          )}`}
+          onClick={() => handleButtonClick("customers Data")}
         >
-          <Image src={getIcon("company")} alt="Company" width={20} height={20} />
-          <p>Company</p>
+          <Image
+            src={getIcon("customers Data")}
+            alt="customers Data"
+            width={25}
+            height={25}
+          />
+          <p className="ml-[-3px]">Customers Data</p>
         </button>
         <button
-          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses("drivers")}`}
-          onClick={() => handleButtonClick("drivers")}
+          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
+            "customers With Workorder"
+          )}`}
+          onClick={() => handleButtonClick("customers With Workorder")}
         >
-          <Image src={getIcon("drivers")} alt="Drivers" width={20} height={20} />
-          <p>Drivers</p>
+          <Image
+            src={getIcon("customers With Workorder")}
+            alt="customers With Workorder"
+            width={20}
+            height={20}
+          />
+          <p>Customer with WorkOrder</p>
         </button>
-        <button
-          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses("devices")}`}
-          onClick={() => handleButtonClick("devices")}
-        >
-          <Image src={getIcon("devices")} alt="Devices" width={20} height={20} />
-          <p>Devices</p>
-        </button>
-        <button
-          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses("account")}`}
-          onClick={() => handleButtonClick("account")}
-        >
-          <Image src={getIcon("account")} alt="Accounts/Transaction" width={20} height={20} />
-          <p>Accounts/Transaction</p>
-        </button>
-        <button
-          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses("settings")}`}
+        {/* <button
+          className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
+            "settings"
+          )}`}
           onClick={() => handleButtonClick("settings")}
         >
-          <Image src={getIcon("settings")} alt="Settings" width={20} height={20} />
+          <Image
+            src={getIcon("settings")}
+            alt="Settings"
+            width={20}
+            height={20}
+          />
           <p>Settings</p>
-        </button>
+        </button> */}
       </aside>
     </div>
   );
