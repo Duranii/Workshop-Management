@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ handleMenuClick }) => {
         id="logo-sidebar"
         className={`${
           isSidebarVisible ? "block" : "hidden"
-        }  overflow-y-hidden rounded-r-3xl lg:block z-40 bg-white h-screen flex gap-8 font-inter font-[500] text-[16px] leading-[30px] flex-col items-start pt-[25px] px-[20px]`}
+        }  overflow-y-hidden rounded-r-3xl lg:block z-40 bg-white h-screen flex gap-8 font-inter font-[500] text-[16px] leading-[30px] flex-col items-start pt-[25px] px-[20px] shadow-black shadow-inner`}
         aria-label="Sidebar"
       >
         {/* Close button for smaller screens */}

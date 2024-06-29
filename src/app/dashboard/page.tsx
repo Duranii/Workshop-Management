@@ -1,9 +1,11 @@
 'use client';
 import React, { useState } from "react";
-import Sidebar from "../components/sidebar";
-import Header from "../components/header";
-import Main from "../components/main";
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
+
+const Sidebar = dynamic(() => import('../components/sidebar'), { ssr: false });
+const Header = dynamic(() => import('../components/header'), { ssr: false });
+const Main = dynamic(() => import('../components/main'), { ssr: false });
 
 const Layout: React.FC = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
@@ -14,19 +16,20 @@ const Layout: React.FC = () => {
     setActiveMenu(menu);
     setSelectedMenu(menu);
   };
+
   return (
-    <div className="flex bg-white">
-      <div className="rounded-r-3xl w-[320px] overflow-y-hidden h-screen static">
-        <Sidebar handleMenuClick={handleMenuClick}/>
+    <div className="flex bg-[#eeeeee]">
+      <div className="fixed top-0 left-0 w-[320px] h-full overflow-y-auto z-50">
+        <Sidebar handleMenuClick={handleMenuClick} />
       </div>
-      <div className="flex flex-col flex-1 min-h-screen overflow-x-hidden">
+      <div className="flex flex-col flex-1 min-h-screen ml-[300px] overflow-x-hidden z-0">
         <Header activeMenu={activeMenu} />
-        <div className="flex-1 mx-auto bg-[#eeeeee] h-full w-[100%] p-4 md:p-6 2xl:p-10 overflow-y-auto">
-          <Main selectedMenu={selectedMenu}/>
+        <div className="flex-1 mx-auto bg-[#eeeeee] h-full w-[100%] p-4 md:p-6 2xl:p-10 overflow-x-hidden overflow-y-auto">
+          <Main selectedMenu={selectedMenu} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Layout;
+export default dynamic(() => Promise.resolve(Layout), { ssr: false });

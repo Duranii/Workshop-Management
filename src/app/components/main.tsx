@@ -24,7 +24,7 @@ const Main: React.FC<MainProps> = ({ selectedMenu }) => {
         return <Drivers />;
       case "customers Data":
         return <Devices />;
-      case "customer With Workorder":
+      case "customers With Workorder":
         return <Account />;
       case "settings":
         return <Settings />;
