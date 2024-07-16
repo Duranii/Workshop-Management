@@ -1,9 +1,7 @@
+'use client';
 import React from "react";
 import Link from "next/link";
-import { auth } from "@/app/firebase/config";
-import { onAuthStateChanged } from "firebase/auth";
 
-// Drivers content component
 const DriversContent: React.FC = () => {
   return (
     <div className="px-4 pt-14 max-w-[1400px] mx-auto">
@@ -71,18 +69,5 @@ const DriversContent: React.FC = () => {
     </div>
   );
 };
-
-export async function getServerSideProps(context : any) {
-  return new Promise((resolve) => {
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        context.res.writeHead(302, { Location: "/" });
-        context.res.end();
-      } else {
-        resolve({ props: {} });
-      }
-    });
-  });
-}
 
 export default DriversContent;
