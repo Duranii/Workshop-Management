@@ -6,7 +6,6 @@ import { auth } from "@/app/firebase/config";
 import BarChart from "./charts/barchart";
 import PieChart from "./charts/piechart";
 
-// Dashboard content component
 const DashboardContent: React.FC = () => {
   const cardData = [
     {
