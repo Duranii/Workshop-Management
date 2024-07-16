@@ -1,55 +1,44 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/app/firebase/config";
 import BarChart from "./charts/barchart";
 import PieChart from "./charts/piechart";
 
+// Dashboard content component
 const DashboardContent: React.FC = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push("/");
-      }
-    });
-
-    return () => unsubscribe();
-  }, [router]);
-
   const cardData = [
     {
       image: "/Image1-Dashboard.png",
       title: "Drivers on job",
-      text: "7"
+      text: "7",
     },
     {
       image: "/Image2-Dashboard.png",
       title: "Active Orders",
-      text: "8"
+      text: "8",
     },
     {
       image: "/Image3-Dashboard.png",
       title: "Completed Orders",
-      text: "128"
+      text: "128",
     },
     {
       image: "/Image4-Dashboard.png",
       title: "Active Drivers",
-      text: "12"
+      text: "12",
     },
     {
       image: "/Image5-Dashboard.png",
       title: "Available Drivers",
-      text: "16"
+      text: "16",
     },
     {
       image: "/Image6-Dashboard.png",
       title: "Inactive Drivers",
-      text: "4"
-    }
+      text: "4",
+    },
   ];
 
   return (
@@ -58,7 +47,8 @@ const DashboardContent: React.FC = () => {
         {cardData.map((card, index) => (
           <div
             key={index}
-            className="bg-white hover:shadow-2xl hover:bg-gray-200 cursor-pointer transition-all h-[120px] w-full flex flex-col md:flex-row items-center justify-start p-4 px-6 shadow-lg rounded-lg">
+            className="bg-white hover:shadow-2xl hover:bg-gray-200 cursor-pointer transition-all h-[120px] w-full flex flex-col md:flex-row items-center justify-start p-4 px-6 shadow-lg rounded-lg"
+          >
             <Image
               src={card.image}
               alt={card.title}
@@ -80,5 +70,18 @@ const DashboardContent: React.FC = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context : any) {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        context.res.writeHead(302, { Location: "/" });
+        context.res.end();
+      } else {
+        resolve({ props: {} });
+      }
+    });
+  });
+}
 
 export default DashboardContent;
