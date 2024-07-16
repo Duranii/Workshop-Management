@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   fetchSignInMethodsForEmail,
+  sendPasswordResetEmail,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "@/app/firebase/config";
 import Image from "next/image";
@@ -18,8 +20,16 @@ function Index() {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isLogin, setIsLogin] = useState<boolean>(true);
-  const [showHelloWorld, setShowHelloWorld] = useState<boolean>(false);
+  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/dashboard");
+      }
+    });
+  }, [router]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,9 +57,11 @@ function Index() {
         progress: undefined,
       });
       console.log({ res });
+      await signOut(auth);
       setEmail("");
       setPassword("");
       setError("");
+      setIsLogin(true);
     } catch (e: any) {
       setError(e.message);
       toast.error("Sign up unsuccessful", {
@@ -100,16 +112,45 @@ function Index() {
     }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      if (!email) {
+        setError("Please enter your email.");
+        return;
+      }
+
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Password reset email sent", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setShowForgotPassword(false);
+      setEmail("");
+      setError("");
+    } catch (e: any) {
+      setError(e.message);
+      toast.error("Failed to send password reset email", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setError("");
-  };
-
-  const handleForgotPassword = () => {
-    setEmail("");
-    setPassword("");
-    setError("");
-    setShowHelloWorld(true);
   };
 
   return (
@@ -133,8 +174,40 @@ function Index() {
               height={240}
             />
           </div>
-          {showHelloWorld ? (
-            <h1 className="text-center text-2xl font-bold">Hello World</h1>
+          {showForgotPassword ? (
+            <>
+              <h1 className="text-[36px] font-inter font-semibold text-[#212121]">
+                Forgot Password
+              </h1>
+              <h1 className=" text-[16px] leading-[28px] font-inter font-semibold text-[#212121]">
+                Enter your email to reset your password
+              </h1>
+              <div className="">
+                <input
+                  type="email"
+                  id="forgotEmail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                  title="Please enter a valid email address"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <button
+                onClick={handleForgotPassword}
+                className="w-[100%] text-white bg-[#FF5701] transition-all hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[16px] uppercase px-5 py-3 text-center dark:bg-[#FF5701] dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Send Reset Email
+              </button>
+              <div
+                className="TextlabelWelcome text-[16px] leading-[28px] font-inter font-semibold text-center text-[#212121] mt-4 cursor-pointer"
+                onClick={() => setShowForgotPassword(false)}
+              >
+                Back to Login
+              </div>
+            </>
           ) : (
             <>
               {isLogin ? (
@@ -191,10 +264,10 @@ function Index() {
                     Login
                   </button>
                   <div
-                    className="TextlabelWelcome text-center hover:underline cursor-pointer opacity-80 text-cyan-500 text-lg font-semibold font-inter"
+                    className="TextlabelWelcome text-center text-[16px] leading-[28px] font-inter font-semibold text-[#212121] cursor-pointer"
                     onClick={toggleForm}
                   >
-                    Sign Up Instead
+                    Don't have an account? Sign up
                   </div>
                 </>
               ) : (
@@ -206,22 +279,24 @@ function Index() {
                     Sign Up
                   </button>
                   <div
-                    className="TextlabelWelcome text-center hover:underline cursor-pointer opacity-80 text-cyan-500 text-lg font-semibold font-inter"
+                    className="TextlabelWelcome text-[16px] leading-[28px] font-inter font-semibold text-center text-[#212121] cursor-pointer"
                     onClick={toggleForm}
                   >
-                    Login Instead
+                    Already have an account? Log in
                   </div>
                 </>
               )}
               <h2 className="text-[#FF5701]">{error}</h2>
             </>
           )}
-          <h2
-            onClick={handleForgotPassword}
-            className="mt-[-30px] cursor-pointer font-inter text-[#FF5701] text-center"
-          >
-            Forgot Password
-          </h2>
+          {!showForgotPassword && (
+            <h2
+              onClick={() => setShowForgotPassword(true)}
+              className="mt-[-30px] cursor-pointer font-inter text-[#FF5701] text-center"
+            >
+              Forgot Password
+            </h2>
+          )}
         </div>
       </form>
 

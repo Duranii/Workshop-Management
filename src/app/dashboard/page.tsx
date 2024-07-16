@@ -1,7 +1,9 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/app/firebase/config";
 
 const Sidebar = dynamic(() => import('../components/sidebar'), { ssr: false });
 const Header = dynamic(() => import('../components/header'), { ssr: false });
@@ -11,6 +13,16 @@ const Layout: React.FC = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
   const [activeMenu, setActiveMenu] = useState<string>("dashboard");
   const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
 
   const handleMenuClick = (menu: string) => {
     setActiveMenu(menu);

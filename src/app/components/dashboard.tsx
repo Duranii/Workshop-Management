@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/app/firebase/config";
 import BarChart from "./charts/barchart";
 import PieChart from "./charts/piechart";
 
 const DashboardContent: React.FC = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
   const cardData = [
     {
       image: "/Image1-Dashboard.png",
