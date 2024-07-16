@@ -1,11 +1,14 @@
+'use client';
 import React from "react";
-import Dashboard from "./dashboard";
-import Orders from "./Customer";
-import Company from "./Vehicle";
-import Drivers from "./Order";
-import Devices from "./devices";
-import Account from "./account";
-import Settings from "./settings";
+import dynamic from 'next/dynamic';
+
+const Dashboard = dynamic(() => import("./dashboard"), { ssr: false });
+const Orders = dynamic(() => import("./Customer"), { ssr: false });
+const Company = dynamic(() => import("./Vehicle"), { ssr: false });
+const Drivers = dynamic(() => import("./Order"), { ssr: false });
+const Devices = dynamic(() => import("./devices"), { ssr: false });
+const Account = dynamic(() => import("./account"), { ssr: false });
+const Settings = dynamic(() => import("./settings"), { ssr: false });
 
 interface MainProps {
   selectedMenu: string;
@@ -29,7 +32,7 @@ const Main: React.FC<MainProps> = ({ selectedMenu }) => {
       case "settings":
         return <Settings />;
       default:
-        return <Dashboard />; 
+        return <Dashboard />;
     }
   };
 
