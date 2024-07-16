@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
@@ -51,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ activeMenu }) => {
           <button className="rounded-xl border-[#FF5701]" onClick={handleLogout}>
             <div className="px-4 flex py-[10px] space-x-2 items-center border-[#FF5701] rounded-lg border-[1px]">
               <div>
-                <img src={filter.src} alt="filter" width={20} height={20}></img>
+                <Image src={filter.src} alt="filter" width={20} height={20} />
               </div>
               <div className="font-Rubik text-[15px] font-[400] text-[#FF5701]">
                 Log out

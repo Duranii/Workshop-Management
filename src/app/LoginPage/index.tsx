@@ -267,7 +267,7 @@ function Index() {
                     className="TextlabelWelcome text-center text-[16px] leading-[28px] font-inter font-semibold text-[#212121] cursor-pointer"
                     onClick={toggleForm}
                   >
-                    Don't have an account? Sign up
+                    Don&apos;t have an account? Sign up
                   </div>
                 </>
               ) : (
