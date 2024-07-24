@@ -9,9 +9,9 @@ import PieChart from "./charts/piechart";
 const DashboardContent: React.FC = () => {
   const cardData = [
     {
-      image: "/Image1-Dashboard.png",
-      title: "Drivers on job",
-      text: "7",
+      image: "/Image5-Dashboard.png",
+      title: "Customers",
+      text: "16",
     },
     {
       image: "/Image2-Dashboard.png",
@@ -24,25 +24,15 @@ const DashboardContent: React.FC = () => {
       text: "128",
     },
     {
-      image: "/Image4-Dashboard.png",
-      title: "Active Drivers",
-      text: "12",
-    },
-    {
-      image: "/Image5-Dashboard.png",
-      title: "Available Drivers",
-      text: "16",
-    },
-    {
-      image: "/Image6-Dashboard.png",
-      title: "Inactive Drivers",
+      image: "/Image1-Dashboard.png",
+      title: "Vehicle",
       text: "4",
     },
   ];
 
   return (
     <div className="p-4 pt-10 max-w-[1400px] mx-auto">
-      <div className="grid sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4">
         {cardData.map((card, index) => (
           <div
             key={index}
