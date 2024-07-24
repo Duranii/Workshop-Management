@@ -14,15 +14,15 @@ const Layout: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState<string>("dashboard");
   const router = useRouter();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push("/");
-      }
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (!user) {
+  //       router.push("/");
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, [router]);
+  //   return () => unsubscribe();
+  // }, [router]);
 
   const handleMenuClick = (menu: string) => {
     setActiveMenu(menu);
