@@ -63,8 +63,11 @@ const DevicesContent: React.FC = () => {
         <p className="w-1/5">Email</p>
         <p className="w-1/5 pl-28">Actions</p>
       </div>
-      {customers.map((customer: any) => (
-        <div className="flex justify-between border-b border-gray-200 py-2" key={customer.customer_id}>
+      {customers.map((customer: any, index) => (
+        <div
+          className={`flex justify-between border-b border-gray-200 py-2 ${index % 2 === 0 ? 'bg-gray-100' : ''}`}
+          key={customer.customer_id}
+        >
           <p className="w-1/5">{customer.name}</p>
           <p className="w-1/5">{customer.phonenumber}</p>
           <p className="w-1/5">{customer.email}</p>

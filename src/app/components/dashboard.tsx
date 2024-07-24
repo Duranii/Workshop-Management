@@ -1,22 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/app/firebase/config";
+import axios from 'axios';
 import BarChart from "./charts/barchart";
 import PieChart from "./charts/piechart";
 
 const DashboardContent: React.FC = () => {
+  const [customersCount, setCustomersCount] = useState(0);
+  const [workOrdersCount, setWorkOrdersCount] = useState(0);
+
+  useEffect(() => {
+    const fetchCustomersAndWorkOrders = async () => {
+      try {
+        const [customersResponse, workOrdersResponse] = await Promise.all([
+          axios.get('http://localhost:3003/api/customers'),
+          axios.get('http://localhost:3003/api/customers-with-workorders') // Fetching work orders data
+        ]);
+
+        setCustomersCount(customersResponse.data.length);
+        setWorkOrdersCount(workOrdersResponse.data.length); // Update with correct data count
+      } catch (error) {
+        console.error('Error fetching data', error);
+      }
+    };
+
+    fetchCustomersAndWorkOrders();
+  }, []);
+
   const cardData = [
     {
       image: "/Image5-Dashboard.png",
       title: "Customers",
-      text: "16",
+      text: customersCount,
     },
     {
       image: "/Image2-Dashboard.png",
-      title: "Active Orders",
-      text: "8",
+      title: "Work Orders",
+      text: workOrdersCount,
     },
     {
       image: "/Image3-Dashboard.png",
