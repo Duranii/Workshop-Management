@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 
 const DevicesContent: React.FC = () => {
   const [customers, setCustomers] = useState([]);
-  const [editingCustomer, setEditingCustomer] = useState(null);
+  const [editingCustomer, setEditingCustomer] = useState<number | null>(null);
   const [formData, setFormData] = useState({ name: '', phonenumber: '', email: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -27,7 +27,7 @@ const DevicesContent: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (customer_id: any) => {
+  const handleDelete = async (customer_id: number) => {
     try {
       await axios.delete(`http://localhost:3003/api/customers/${customer_id}`);
       fetchCustomers();
@@ -36,7 +36,7 @@ const DevicesContent: React.FC = () => {
     }
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
