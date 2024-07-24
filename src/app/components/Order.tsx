@@ -46,18 +46,6 @@ const DriversContent: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <div className="w-full flex gap-5 items-center">
           <div className="w-[15%] flex flex-col gap-2">
-            <label className="w-full" htmlFor="workOrderCode">
-              Work Order Code
-            </label>
-            <input
-              className="w-full h-10 pl-4 rounded-lg"
-              type="text"
-              id="workOrderCode"
-              value={formData.workOrderCode}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="w-[15%] flex flex-col gap-2">
             <label className="w-full" htmlFor="vehicleId">
               Vehicle ID
             </label>
@@ -80,18 +68,6 @@ const DriversContent: React.FC = () => {
               type="datetime-local"
               id="workOrderTime"
               value={formData.workOrderTime}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="w-[20%] flex flex-col gap-2">
-            <label className="w-full" htmlFor="payment">
-              Payment
-            </label>
-            <input
-              className="w-full h-10 pl-4 rounded-lg"
-              type="text"
-              id="payment"
-              value={formData.payment}
               onChange={handleChange}
             />
           </div>
