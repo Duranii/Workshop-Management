@@ -28,7 +28,7 @@ const AccountContent: React.FC = () => {
         <p className="w-1/6 font-bold">Work Order Time</p>
       </div>
       {customersWithWorkOrders.map((row:any, index) => (
-        <div className="flex justify-between border-b border-gray-300 py-2" key={index}>
+        <div className={`py-2 flex justify-between border-b border-gray-300 py-2" ${index % 2 === 0 ? 'bg-gray-100' : ''}`} key={index} >
           <p className="w-1/6">{row.name}</p>
           <p className="w-1/6">{row.phonenumber}</p>
           <p className="w-1/6">{row.email}</p>

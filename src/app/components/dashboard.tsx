@@ -16,11 +16,11 @@ const DashboardContent: React.FC = () => {
       try {
         const [customersResponse, workOrdersResponse] = await Promise.all([
           axios.get('http://localhost:3003/api/customers'),
-          axios.get('http://localhost:3003/api/customers-with-workorders') // Fetching work orders data
+          axios.get('http://localhost:3003/api/customers-with-workorders')
         ]);
 
         setCustomersCount(customersResponse.data.length);
-        setWorkOrdersCount(workOrdersResponse.data.length); // Update with correct data count
+        setWorkOrdersCount(workOrdersResponse.data.length);
       } catch (error) {
         console.error('Error fetching data', error);
       }
