@@ -12,7 +12,7 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'WorkshopManagement',
     port: 8889
   });
