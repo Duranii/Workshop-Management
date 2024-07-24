@@ -31,9 +31,9 @@ const CompanyContent: React.FC = () => {
         model: '',
         fuel: '',
         mileage: '',
-        customerId: '',  // Reset field
+        customerId: '',
       });
-      setTimeout(() => setSuccessMessage(null), 2000); // Hide the message after 2 seconds
+      setTimeout(() => setSuccessMessage(null), 2000);
     } catch (error) {
       console.error('Error adding vehicle', error);
     }

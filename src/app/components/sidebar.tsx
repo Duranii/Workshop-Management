@@ -49,8 +49,8 @@ const Sidebar: React.FC<SidebarProps> = ({ handleMenuClick }) => {
         return activeMenu === "customers Data" ? DevicesIconActive : DevicesIcon;
       case "customers With Workorder":
         return activeMenu === "customers With Workorder" ? AccountIconActive : AccountIcon;
-      case "settings":
-        return activeMenu === "settings" ? SettingsIconActive : SettingsIcon;
+      case "Vehicle Data":
+        return activeMenu === "Vehicle Data" ? SettingsIconActive : SettingsIcon;
       default:
         return DashboardIcon;
     }
@@ -172,20 +172,20 @@ const Sidebar: React.FC<SidebarProps> = ({ handleMenuClick }) => {
           />
           <p>Customer with WorkOrder</p>
         </button>
-        {/* <button
+        <button
           className={`w-[100%] px-4 py-2 flex items-center gap-6 ${buttonClasses(
-            "settings"
+            "Vehicle Data"
           )}`}
-          onClick={() => handleButtonClick("settings")}
+          onClick={() => handleButtonClick("Vehicle Data")}
         >
           <Image
-            src={getIcon("settings")}
-            alt="Settings"
-            width={20}
-            height={20}
+            src={getIcon("vehicles")}
+            alt="vehicles"
+            width={25}
+            height={25}
           />
-          <p>Settings</p>
-        </button> */}
+          <p className="ml-[-4px]">Vehicle Data</p>
+        </button>
       </aside>
     </div>
   );

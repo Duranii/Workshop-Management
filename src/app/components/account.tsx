@@ -19,31 +19,24 @@ const AccountContent: React.FC = () => {
 
   return (
     <div>
-      <h2>Account</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Customer Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Work Order Code</th>
-            <th>Advisory Note</th>
-            <th>Work Order Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customersWithWorkOrders.map((row:any, index) => (
-            <tr key={index}>
-              <td>{row.name}</td>
-              <td>{row.phonenumber}</td>
-              <td>{row.email}</td>
-              <td>{row.work_order_code}</td>
-              <td>{row.advisory_note}</td>
-              <td>{row.work_order_time}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="flex justify-between border-b-2 border-gray-300 pb-2">
+        <p className="w-1/6 font-bold">Customer Name</p>
+        <p className="w-1/6 font-bold">Phone Number</p>
+        <p className="w-1/6 font-bold">Email</p>
+        <p className="w-1/6 font-bold">Work Order Code</p>
+        <p className="w-1/6 font-bold">Advisory Note</p>
+        <p className="w-1/6 font-bold">Work Order Time</p>
+      </div>
+      {customersWithWorkOrders.map((row:any, index) => (
+        <div className="flex justify-between border-b border-gray-300 py-2" key={index}>
+          <p className="w-1/6">{row.name}</p>
+          <p className="w-1/6">{row.phonenumber}</p>
+          <p className="w-1/6">{row.email}</p>
+          <p className="w-1/6 text-center">{row.work_order_code}</p>
+          <p className="w-1/6">{row.advisory_note}</p>
+          <p className="w-1/6">{row.work_order_time}</p>
+        </div>
+      ))}
     </div>
   );
 };

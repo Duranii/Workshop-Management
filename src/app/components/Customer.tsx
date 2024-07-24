@@ -31,7 +31,7 @@ const OrdersContent: React.FC = () => {
         state: '',
         country: '',
       });
-      setTimeout(() => setSuccessMessage(null), 2000); // Hide the message after 2 seconds
+      setTimeout(() => setSuccessMessage(null), 2000);
     } catch (error) {
       console.error('Error adding customer', error);
     }
