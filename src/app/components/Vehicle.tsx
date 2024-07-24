@@ -9,7 +9,7 @@ const CompanyContent: React.FC = () => {
     model: '',
     fuel: '',
     mileage: '',
-    customerId: '',  // Added field
+    customerId: '',  
   });
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);

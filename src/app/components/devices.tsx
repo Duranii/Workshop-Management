@@ -19,12 +19,12 @@ const DevicesContent: React.FC = () => {
     }
   };
 
-  const handleEdit = (customer) => {
+  const handleEdit = (customer:any) => {
     setEditingCustomer(customer.customer_id);
     setFormData({ name: customer.name, phonenumber: customer.phonenumber, email: customer.email });
   };
 
-  const handleDelete = async (customer_id) => {
+  const handleDelete = async (customer_id:any) => {
     try {
       await axios.delete(`http://localhost:3003/api/customers/${customer_id}`);
       fetchCustomers();
@@ -33,7 +33,7 @@ const DevicesContent: React.FC = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -64,7 +64,7 @@ const DevicesContent: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {customers.map((customer) => (
+          {customers.map((customer:any) => (
             <tr key={customer.customer_id}>
               <td>{customer.name}</td>
               <td>{customer.phonenumber}</td>

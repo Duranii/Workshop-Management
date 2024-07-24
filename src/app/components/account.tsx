@@ -32,7 +32,7 @@ const AccountContent: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {customersWithWorkOrders.map((row, index) => (
+          {customersWithWorkOrders.map((row:any, index) => (
             <tr key={index}>
               <td>{row.name}</td>
               <td>{row.phonenumber}</td>
