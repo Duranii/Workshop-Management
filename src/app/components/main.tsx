@@ -6,8 +6,8 @@ const Dashboard = dynamic(() => import("./dashboard"), { ssr: false });
 const Orders = dynamic(() => import("./Customer"), { ssr: false });
 const Company = dynamic(() => import("./Vehicle"), { ssr: false });
 const Drivers = dynamic(() => import("./Order"), { ssr: false });
-const Devices = dynamic(() => import("./devices"), { ssr: false });
-const Account = dynamic(() => import("./account"), { ssr: false });
+const Devices = dynamic(() => import("./customerData"), { ssr: false });
+const Account = dynamic(() => import("./workorderData"), { ssr: false });
 const Settings = dynamic(() => import("./settings"), { ssr: false });
 
 interface MainProps {
