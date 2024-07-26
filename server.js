@@ -37,21 +37,101 @@ app.put('/api/customers/:id', (req, res) => {
   const { id } = req.params;
   const { name, phonenumber, email } = req.body;
   const sql = 'UPDATE customer SET name = ?, phonenumber = ?, email = ? WHERE customer_id = ?';
+  
   db.query(sql, [name, phonenumber, email, id], (err, results) => {
-    if (err) throw err;
+    if (err) {
+      console.error('Error updating customer:', err);
+      return res.status(500).json({ error: 'Failed to update customer' });
+    }
     res.json({ message: 'Customer updated' });
   });
 });
 
+
 // Delete customer
 app.delete('/api/customers/:id', (req, res) => {
   const { id } = req.params;
-  const sql = 'DELETE FROM customer WHERE customer_id = ?';
-  db.query(sql, [id], (err, results) => {
-    if (err) throw err;
-    res.json({ message: 'Customer deleted' });
+
+  // First, delete all work orders associated with this customer
+  const deleteWorkOrdersSql = 'DELETE FROM work_order WHERE customer_id = ?';
+  db.query(deleteWorkOrdersSql, [id], (err, results) => {
+    if (err) {
+      console.error('Error deleting work orders:', err);
+      return res.status(500).json({ error: 'Failed to delete work orders' });
+    }
+
+    // Then, delete all vehicles associated with this customer
+    const deleteVehiclesSql = 'DELETE FROM vehicle WHERE customer_id = ?';
+    db.query(deleteVehiclesSql, [id], (err, results) => {
+      if (err) {
+        console.error('Error deleting vehicles:', err);
+        return res.status(500).json({ error: 'Failed to delete vehicles' });
+      }
+
+      // Finally, delete the customer
+      const deleteCustomerSql = 'DELETE FROM customer WHERE customer_id = ?';
+      db.query(deleteCustomerSql, [id], (err, results) => {
+        if (err) {
+          console.error('Error deleting customer:', err);
+          return res.status(500).json({ error: 'Failed to delete customer' });
+        }
+        res.json({ message: 'Customer deleted' });
+      });
+    });
   });
 });
+// Fetch vehicles
+app.get('/api/vehicles', (req, res) => {
+  const sql = 'SELECT * FROM vehicle';
+  db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+// Update vehicle
+app.put('/api/vehicles/:id', (req, res) => {
+  const { id } = req.params;
+  const { registration_number, make, model, year, fuel, mileage, customer_id } = req.body;
+  const sql = 'UPDATE vehicle SET registration_number = ?, make = ?, model = ?, year = ?, fuel = ?, mileage = ?, customer_id = ? WHERE vehicle_id = ?';
+  
+  db.query(sql, [registration_number, make, model, year, fuel, mileage, customer_id, id], (err, results) => {
+    if (err) {
+      console.error('Error updating vehicle:', err);
+      return res.status(500).json({ error: 'Failed to update vehicle' });
+    }
+    res.json({ message: 'Vehicle updated' });
+  });
+});
+
+
+// Delete a vehicle and all associated work orders
+app.delete('/api/vehicles/:id', (req, res) => {
+  const { id } = req.params;
+
+  // First, delete all work orders associated with this vehicle
+  const deleteWorkOrdersSql = 'DELETE FROM work_order WHERE vehicle_id = ?';
+  db.query(deleteWorkOrdersSql, [id], (err, results) => {
+    if (err) {
+      console.error('Error deleting work orders:', err);
+      return res.status(500).json({ error: 'Failed to delete work orders' });
+    }
+
+    // Then, delete the vehicle
+    const deleteVehicleSql = 'DELETE FROM vehicle WHERE vehicle_id = ?';
+    db.query(deleteVehicleSql, [id], (err, results) => {
+      if (err) {
+        console.error('Error deleting vehicle:', err);
+        return res.status(500).json({ error: 'Failed to delete vehicle' });
+      }
+      res.json({ message: 'Vehicle deleted' });
+    });
+  });
+});
+
+
+
+
 
 // Fetch customers with their work orders
 app.get('/api/customers-with-workorders', (req, res) => {

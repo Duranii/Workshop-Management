@@ -8,7 +8,7 @@ const Company = dynamic(() => import("./Vehicle"), { ssr: false });
 const Drivers = dynamic(() => import("./Order"), { ssr: false });
 const Devices = dynamic(() => import("./customerData"), { ssr: false });
 const Account = dynamic(() => import("./workorderData"), { ssr: false });
-const Settings = dynamic(() => import("./settings"), { ssr: false });
+const Settings = dynamic(() => import("./vehicleData"), { ssr: false });
 
 interface MainProps {
   selectedMenu: string;

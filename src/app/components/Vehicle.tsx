@@ -31,7 +31,7 @@ const CompanyContent: React.FC = () => {
         model: '',
         fuel: '',
         mileage: '',
-        customerId: '',
+        customerId: '', 
       });
       setTimeout(() => setSuccessMessage(null), 2000);
     } catch (error) {

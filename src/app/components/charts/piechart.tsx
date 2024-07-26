@@ -7,13 +7,15 @@ type ApexFormatterParam = {
   };
 };
 
-export default function PieActiveArc() {
-  const series = [10, 15, 20]; // Data values for the pie chart
-  const labels = ['series A', 'series B', 'series C']; // Labels for each data value
+type PieChartProps = {
+  data: number[];
+  labels: string[];
+};
 
+const PieChart: React.FC<PieChartProps> = ({ data, labels }) => {
   const options: ApexCharts.ApexOptions = {
     chart: {
-      type: 'donut', // Use 'donut' for inner radius
+      type: 'donut',
       height: 290,
     },
     labels: labels,
@@ -31,7 +33,7 @@ export default function PieActiveArc() {
     plotOptions: {
       pie: {
         donut: {
-          size: '60%', // Adjust this for innerRadius equivalent
+          size: '60%',
           labels: {
             show: true,
             name: {
@@ -46,14 +48,14 @@ export default function PieActiveArc() {
             total: {
               show: true,
               showAlways: true,
-              label: 'Drivers',
+              label: 'Total',
               formatter: function (w: ApexFormatterParam) {
                 return w.globals.seriesTotals.reduce((a, b) => a + b, 0).toString();
               }              
             }
           }
         },
-        expandOnClick: true, // Allows arc to expand on click
+        expandOnClick: true,
       },
     },
     fill: {
@@ -77,7 +79,9 @@ export default function PieActiveArc() {
 
   return (
     <div className="bg-white p-4 w-[100%] inline-flex flex-col">
-      <Chart options={options} series={series} type="donut" height={290} />
+      <Chart options={options} series={data} type="donut" height={290} />
     </div>
   );
-}
+};
+
+export default PieChart;

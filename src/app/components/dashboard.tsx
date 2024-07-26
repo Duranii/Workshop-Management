@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/app/firebase/config";
 import axios from 'axios';
@@ -10,23 +9,26 @@ import PieChart from "./charts/piechart";
 const DashboardContent: React.FC = () => {
   const [customersCount, setCustomersCount] = useState(0);
   const [workOrdersCount, setWorkOrdersCount] = useState(0);
+  const [vehiclesCount, setVehiclesCount] = useState(0); // State for vehicle count
 
   useEffect(() => {
-    const fetchCustomersAndWorkOrders = async () => {
+    const fetchData = async () => {
       try {
-        const [customersResponse, workOrdersResponse] = await Promise.all([
+        const [customersResponse, workOrdersResponse, vehiclesResponse] = await Promise.all([
           axios.get('http://localhost:3003/api/customers'),
-          axios.get('http://localhost:3003/api/customers-with-workorders')
+          axios.get('http://localhost:3003/api/customers-with-workorders'),
+          axios.get('http://localhost:3003/api/vehicles') // Fetch vehicle data
         ]);
 
         setCustomersCount(customersResponse.data.length);
         setWorkOrdersCount(workOrdersResponse.data.length);
+        setVehiclesCount(vehiclesResponse.data.length); // Set vehicle count
       } catch (error) {
         console.error('Error fetching data', error);
       }
     };
 
-    fetchCustomersAndWorkOrders();
+    fetchData();
   }, []);
 
   const cardData = [
@@ -47,10 +49,14 @@ const DashboardContent: React.FC = () => {
     },
     {
       image: "/Image1-Dashboard.png",
-      title: "Vehicle",
-      text: "4",
+      title: "Vehicles",
+      text: vehiclesCount, // Display vehicle count
     },
   ];
+
+  // Dynamic data for pie chart
+  const pieChartData = [customersCount, workOrdersCount, 128, vehiclesCount]; // Include vehicle count
+  const pieChartLabels = ['Customers', 'Work Orders', 'Completed Orders', 'Vehicles']; // Add Vehicles label
 
   return (
     <div className="p-4 pt-10 max-w-[1400px] mx-auto">
@@ -76,13 +82,13 @@ const DashboardContent: React.FC = () => {
       </div>
       <div className="mt-10 gap-5 flex w-[100%] items-center">
         <BarChart />
-        <PieChart />
+        <PieChart data={pieChartData} labels={pieChartLabels} />
       </div>
     </div>
   );
 };
 
-export async function getServerSideProps(context : any) {
+export async function getServerSideProps(context: any) {
   return new Promise((resolve) => {
     onAuthStateChanged(auth, (user) => {
       if (!user) {
